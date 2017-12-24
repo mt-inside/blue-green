@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"strings"
@@ -18,6 +19,6 @@ func main() {
 	colour = strings.ToUpper(os.Getenv("COLOUR"))
 
 	http.HandleFunc("/", handler)
-	fmt.Println("Serving...")
+	log.Print("Serving...")
 	http.ListenAndServe(":8080", nil)
 }
