@@ -1,5 +1,6 @@
 /* Example for the lols.
  * This really is never meant to handle high load though, and it just complicates the code (and adds 8k to the image!)
+ * Plus, see main.rs - the single-threaded version isn't exactly slow.
  */
 extern crate num_cpus;
 extern crate tiny_http;

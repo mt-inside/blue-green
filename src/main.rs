@@ -1,3 +1,5 @@
+/* Tested at 1000rps: p50 3ms, p99 33ms, 40% of a 2GHz AMD Turion(tm) II Neo N54L */
+
 extern crate tiny_http;
 
 use std::env;
