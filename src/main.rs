@@ -10,7 +10,6 @@ fn main() {
     println!("Listening on {:?}", server.server_addr());
 
     for request in server.incoming_requests() {
-        /* Could spawn a thread for each request, but that's probably slower than just responding. */
         let response = tiny_http::Response::from_string(body.clone()).with_header(
             "Content-Type: text/html"
                 .parse::<tiny_http::Header>()
