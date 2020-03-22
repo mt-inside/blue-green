@@ -7,7 +7,7 @@ RUN apk update &&\
 WORKDIR /app
 COPY . .
 
-ENV RUSTFLAGS="-C target-feature=+crt-static"
+ENV RUSTFLAGS="-C target-feature=+crt-static -C link-arg=-s"
 RUN cargo build --target x86_64-alpine-linux-musl --release
 
 FROM scratch
