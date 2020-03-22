@@ -8,3 +8,4 @@ edition = "2018"
 
 [dependencies]
 tiny_http = "^0.6.2"
+chrono = "*" # Dependancy of tiny_http already
