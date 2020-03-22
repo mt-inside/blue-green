@@ -12,7 +12,7 @@ RUN cargo build --target x86_64-alpine-linux-musl --release
 
 FROM scratch
 ARG COLOUR
-COPY --from=build /app/target/x86_64-alpine-linux-musl/release/blue-green-rust /
+COPY --from=build /app/target/x86_64-alpine-linux-musl/release/blue-green /
 EXPOSE 8080
-ENTRYPOINT ["/blue-green-rust"]
+ENTRYPOINT ["/blue-green"]
 ENV COLOUR=$COLOUR

@@ -1,5 +1,5 @@
 [package]
-name = "blue-green-rust"
+name = "blue-green"
 version = "0.1.0"
 authors = ["Matt Turner <matturner@gmail.com>"]
 edition = "2018"
