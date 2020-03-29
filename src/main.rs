@@ -15,6 +15,8 @@ fn main() {
     println!("Listening on {:?}", server.server_addr());
 
     for request in server.incoming_requests() {
+        println!("{:?}", request);
+
         if request.url().starts_with("/live") && (chrono::Utc::now() - start).num_seconds() < 5 {
             let response = tiny_http::Response::new_empty(tiny_http::StatusCode(500));
             let _ = request.respond(response);
