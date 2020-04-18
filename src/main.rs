@@ -4,6 +4,7 @@ extern crate chrono;
 extern crate tiny_http;
 
 use std::env;
+use std::io::Cursor;
 
 fn main() {
     let start = chrono::Utc::now();
@@ -18,17 +19,21 @@ fn main() {
         println!("{:?}", request);
 
         if request.url().starts_with("/live") && (chrono::Utc::now() - start).num_seconds() < 5 {
-            let response = tiny_http::Response::new_empty(tiny_http::StatusCode(500));
+            let response = tiny_http::Response::empty(tiny_http::StatusCode(500));
             let _ = request.respond(response);
         } else {
             let (r, t) = if request.url().starts_with("/api") {
                 (json.clone(), "Content-Type: application/json")
             } else {
-                (html.clone(), "Content-Type: text/html")
+                (html.clone(), "Content-Type: text/html; charset=UTF-8")
                 /* this will also reply 200 to [/healthz,/live], so that's "fine" */
             };
-            let response = tiny_http::Response::from_string(r)
-                .with_header(t.parse::<tiny_http::Header>().unwrap());
+            let l = Some(r.len());
+            /* There is a ::from_string() but that sets a `Content-Type: text/plain` which you
+             * can't get rid of. */
+            let response = tiny_http::Response::empty(tiny_http::StatusCode(200))
+                .with_header(t.parse::<tiny_http::Header>().unwrap())
+                .with_data(Cursor::new(r.into_bytes()), l);
             let _ = request.respond(response);
         }
     }
