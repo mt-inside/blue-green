@@ -13,10 +13,10 @@ fn main() {
     let json = format!("{{ \"colour\": \"{c}\" }}", c = colour); // Not taking on the heft of serde for this
 
     let server = tiny_http::Server::http("0.0.0.0:8080").expect("Can't start server");
-    println!("Listening on {:?}", server.server_addr());
+    println!("[{}] Listening on {:?}", colour, server.server_addr());
 
     for request in server.incoming_requests() {
-        println!("{:?}", request);
+        println!("[{}] {:?}", colour, request);
 
         if request.url().starts_with("/live") && (chrono::Utc::now() - start).num_seconds() < 5 {
             let response = tiny_http::Response::empty(tiny_http::StatusCode(500));
