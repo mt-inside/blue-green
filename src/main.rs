@@ -9,8 +9,19 @@ use std::io::Cursor;
 fn main() {
     let start = chrono::Utc::now();
     let colour = env::var("COLOUR").expect("Please supply a colour");
-    let html = format!("<html><head><title>{c}</title></head><body style=\"background-color: {c}; color: white\"><h1>{c}</h1><body><html>", c=colour);
-    let json = format!("{{ \"colour\": \"{c}\" }}", c = colour); // Not taking on the heft of serde for this
+    let html = format!(
+        "\
+<html>
+    <head>
+        <title>{c}</title>
+    </head>
+    <body style=\"background-color: {c}; color: white\">
+        <h1>{c}</h1>
+    <body>
+<html>",
+        c = colour
+    );
+    let json = format!(r#"{{ "colour": "{c}" }}"#, c = colour); // Not taking on the heft of serde for this
 
     let server = tiny_http::Server::http("0.0.0.0:8080").expect("Can't start server");
     println!("[{}] Listening on {:?}", colour, server.server_addr());
