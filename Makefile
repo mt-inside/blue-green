@@ -1,5 +1,8 @@
 .PHONY: containers test clean
 
+build-local:
+	cargo build
+
 run:
 	COLOUR=blue cargo run
 
