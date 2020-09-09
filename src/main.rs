@@ -13,7 +13,7 @@ fn main() {
         "\
 <html>
     <head>
-        <title>{c}</title>
+        <title>Hello {c}</title>
     </head>
     <body style=\"background-color: {c}; color: white\">
         <h1>{c}</h1>
