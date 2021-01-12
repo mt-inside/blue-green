@@ -1,4 +1,4 @@
-/* Tested at 1000rps: p50 3ms, p99 33ms, 40% of a 2GHz AMD Turion(tm) II Neo N54L */
+/* Tested at 1000rps: p50 3ms, p99 33ms; 40% of a 2.2GHz AMD Turion(tm) II Neo N54L */
 
 extern crate chrono;
 extern crate tiny_http;
