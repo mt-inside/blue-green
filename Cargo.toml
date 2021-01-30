@@ -9,3 +9,8 @@ edition = "2018"
 [dependencies]
 tiny_http = "^0.6.2"
 chrono = "*" # Dependancy of tiny_http already
+
+[dependencies.signal-hook]
+version = "0.3.4"
+default-features=false
+features=["iterator"]

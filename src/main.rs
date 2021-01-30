@@ -3,10 +3,23 @@
 extern crate chrono;
 extern crate tiny_http;
 
+use signal_hook::{consts::signal::*, iterator::Signals};
 use std::env;
+use std::error::Error;
 use std::io::Cursor;
+use std::thread;
 
-fn main() {
+fn main() -> Result<(), Box<dyn Error>> {
+    let sigs = [SIGHUP, SIGTERM, SIGINT, SIGQUIT];
+    let mut signals = Signals::new(&sigs)?;
+
+    thread::spawn(move || {
+        for s in signals.forever() {
+            println!("Caught signal {:?}; quitting", s);
+            std::process::exit(0);
+        }
+    });
+
     let start = chrono::Utc::now();
     let colour = env::var("COLOUR").expect("Please supply a colour");
     let html = format!(
@@ -48,4 +61,6 @@ fn main() {
             let _ = request.respond(response);
         }
     }
+
+    Ok(())
 }
