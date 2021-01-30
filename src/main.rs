@@ -42,7 +42,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     for request in server.incoming_requests() {
         println!("[{}] {:?}", colour, request);
 
-        if request.url().starts_with("/live") && (chrono::Utc::now() - start).num_seconds() < 5 {
+        if request.url().starts_with("/ready") && (chrono::Utc::now() - start).num_seconds() < 5 {
             let response = tiny_http::Response::empty(tiny_http::StatusCode(500));
             let _ = request.respond(response);
         } else {
@@ -50,7 +50,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                 (json.clone(), "Content-Type: application/json")
             } else {
                 (html.clone(), "Content-Type: text/html; charset=UTF-8")
-                /* this will also reply 200 to [/healthz,/live], so that's "fine" */
+                /* NB: this will also reply 200 to any other path, including /live or whatever */
             };
             let l = Some(r.len());
             /* There is a ::from_string() but that sets a `Content-Type: text/plain` which you
