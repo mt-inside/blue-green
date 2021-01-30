@@ -23,7 +23,7 @@ test:
 	docker run -d --rm --name pink -p 8080 mtinside/blue-green:pink
 
 push:
-	docker push mtinside/blue-green
+	docker push mtinside/blue-green -a
 
 clean:
 	cargo clean
