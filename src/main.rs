@@ -26,7 +26,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         "\
 <html>
     <head>
-        <title>Hello {c}</title>
+        <title>{c}</title>
     </head>
     <body style=\"background-color: {c}; color: white\">
         <h1>{c}</h1>
