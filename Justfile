@@ -1,8 +1,5 @@
-build:
-	CARGO_BUILD_TARGET="x86_64-unknown-linux-musl" RUSTFLAGS="-C target-feature=+crt-static -C link-arg=-s" cargo build --release
-
 run:
-	COLOUR=blue cargo run
+	COLOUR=blue cargo run --release
 
 clean:
 	cargo clean

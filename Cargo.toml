@@ -14,3 +14,10 @@ chrono = "*" # Dependancy of tiny_http already
 version = "0.3.4"
 default-features=false
 features=["iterator"]
+
+[profile.release]
+strip = true
+opt-level = "z"  # Optimize for size.
+lto = true
+codegen-units = 1
+panic = "abort"
