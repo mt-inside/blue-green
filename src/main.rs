@@ -20,6 +20,10 @@ fn main() -> Result<(), Box<dyn Error>> {
         }
     });
 
+    // TODO expose color on prom
+    // TODO expose error rate on prom
+    // TODO take error rate on cmdline
+
     let start = chrono::Utc::now();
     let colour = env::var("COLOUR").expect("Please supply a colour");
     let html = format!(
@@ -35,8 +39,9 @@ fn main() -> Result<(), Box<dyn Error>> {
         c = colour
     );
     let json = format!(r#"{{ "colour": "{c}" }}"#, c = colour); // Not taking on the heft of serde for this
+                                                                // TODO try it with LTO and see how much bigger it really gets
 
-    let server = tiny_http::Server::http("0.0.0.0:8080").expect("Can't start server");
+    let server = tiny_http::Server::http("0.0.0.0:8080").expect("Can't start server"); // TODO add logging library and do JSON / text
     println!("[{}] Listening on {:?}", colour, server.server_addr());
 
     for request in server.incoming_requests() {
@@ -51,6 +56,10 @@ fn main() -> Result<(), Box<dyn Error>> {
             } else {
                 (html.clone(), "Content-Type: text/html; charset=UTF-8")
                 /* NB: this will also reply 200 to any other path, including /live or whatever */
+                // TODO: handle /healthz and /readyz, return json with status ok, color foo
+                // TODO change to US eng everywhere
+                // TODO read color as args[1]
+                // TODO parse flags: --port, --color
             };
             let l = Some(r.len());
             /* There is a ::from_string() but that sets a `Content-Type: text/plain` which you
