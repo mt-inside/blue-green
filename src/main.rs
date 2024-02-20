@@ -23,6 +23,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     // TODO expose color on prom
     // TODO expose error rate on prom
     // TODO take error rate on cmdline
+    // TODO do actually try Serde and see what the resulting binary size is with all the LTO turned on
 
     let start = chrono::Utc::now();
     let colour = env::var("COLOUR").expect("Please supply a colour");
