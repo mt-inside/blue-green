@@ -1,8 +1,5 @@
 /* Tested at 1000rps: p50 3ms, p99 33ms; 40% of a 2.2GHz AMD Turion(tm) II Neo N54L */
 
-extern crate chrono;
-extern crate tiny_http;
-
 use signal_hook::{consts::signal::*, iterator::Signals};
 use std::env;
 use std::error::Error;
@@ -22,6 +19,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     // TODO expose color on prom
     // TODO expose error rate on prom
+    // TODO all this error rate - this should be an output option for badpod
     // TODO take error rate on cmdline
     // TODO do actually try Serde and see what the resulting binary size is with all the LTO turned on
 

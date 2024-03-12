@@ -1,0 +1,32 @@
+package:
+  name: blue-green
+  epoch: 0
+  version: v0.0.1
+  description: Either blue or green
+  url: https://github.com/mt-inside/blue-green
+  copyright:
+    - paths:
+        - "*"
+      license: Apache-2.0
+  target-architecture: [aarch64] # amd64? x86_64?
+environment:
+  contents:
+    keyring:
+      - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
+    repositories:
+      - https://packages.wolfi.dev/os
+    packages:
+      - wolfi-base
+      - build-base
+      - rustup
+      - just
+      - git
+pipeline:
+  - name: Build
+    runs: |
+      git config --global --add safe.directory /home/build
+      rustup-init --default-toolchain nightly -y # Calling this as "rustup toolchain install nightly" doesn't make the ~/.cargo links (even after setting default toolchain)
+      source "$HOME/.cargo/env"
+      just build-ci
+      mkdir -p "${{targets.destdir}}/usr/bin"
+      mv "./target/aarch64-unknown-linux-gnu/release/blue-green" "${{targets.destdir}}/usr/bin/"

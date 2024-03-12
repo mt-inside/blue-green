@@ -1,6 +1,6 @@
 # TODO: make this build x86_64 and aarch64
 
-FROM rust:1.61.0 AS build
+FROM rust:1.65.0 AS build
 RUN rustup target add aarch64-unknown-linux-musl
 #RUN rustup toolchain add nightly
 #RUN rustup component add rust-src --toolchain nightly
