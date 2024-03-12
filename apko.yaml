@@ -5,7 +5,6 @@ contents:
     - https://packages.wolfi.dev/os
     - ./packages
   packages:
-    - wolfi-baselayout
     - blue-green
 
 accounts:

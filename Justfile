@@ -20,7 +20,8 @@ clean:
 	cargo clean
 
 build-ci:
-	RUSTFLAGS="-C target-feature=+crt-static -C link-arg=-s -Zlocation-detail=none" cargo build -Z build-std=std,panic_abort -Z build-std-features=panic_immediate_abort --target aarch64-unknown-linux-gnu --release
+	#CARGO_BUILD_TARGET="aarch64-unknown-linux-musl" RUSTFLAGS="-C target-feature=+crt-static -C link-arg=-s -Zlocation-detail=none" cargo +nightly-aarch64-unknown-linux-musl build -Z build-std=std,panic_abort -Z build-std-features=panic_immediate_abort --target aarch64-unknown-linux-musl --release
+	RUSTFLAGS="-C target-feature=+crt-static -C link-arg=-s -Zlocation-detail=none" cargo build --release
 
 build-color-images:
 	docker build . --build-arg COLOUR=blue -t mtinside/blue-green:blue --load

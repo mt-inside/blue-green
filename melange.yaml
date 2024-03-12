@@ -1,3 +1,10 @@
+# TODO
+# - having to specify rustc targets anywhere (seemingly can't be avoided in the build line when using build-std) breaks our ability to "cross" compile by having melange run each target's native toolchain under emulation. Could
+#   - see if there's a ${{vars.FOO}} for the current target arch (varibale transforms to change arm64 to aarch64). PR if not
+# - wolfi is fundamentally a glibc OS, so you'd actually have to set it up for cross-compilation by manually getting a musl libc + headers etc into the build env
+#   - try alpine packages
+#     - still doesn't link
+#   - glibc is just way bigger (either statically or dynamically linked)
 package:
   name: blue-green
   epoch: 0
@@ -14,10 +21,15 @@ environment:
     keyring:
       - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
     repositories:
-      - https://packages.wolfi.dev/os
+      - https://dl-cdn.alpinelinux.org/alpine/edge/main
+      - https://dl-cdn.alpinelinux.org/alpine/edge/community
     packages:
-      - wolfi-base
+      - alpine-baselayout-data
+      - ca-certificates-bundle
       - build-base
+      - musl
+      - musl-dev
+      - busybox
       - rustup
       - just
       - git
@@ -25,8 +37,8 @@ pipeline:
   - name: Build
     runs: |
       git config --global --add safe.directory /home/build
-      rustup-init --default-toolchain nightly -y # Calling this as "rustup toolchain install nightly" doesn't make the ~/.cargo links (even after setting default toolchain)
+      rustup-init --default-toolchain nightly --default-host aarch64-unknown-linux-musl -y # Calling this as "rustup toolchain install nightly" doesn't make the ~/.cargo links (even after setting default toolchain)
       source "$HOME/.cargo/env"
       just build-ci
       mkdir -p "${{targets.destdir}}/usr/bin"
-      mv "./target/aarch64-unknown-linux-gnu/release/blue-green" "${{targets.destdir}}/usr/bin/"
+      mv "./target/aarch64-unknown-linux-musl/release/blue-green" "${{targets.destdir}}/usr/bin/"

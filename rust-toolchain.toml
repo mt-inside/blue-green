@@ -1,4 +1,4 @@
 [toolchain]
 channel = "nightly"
 components = [ "rust-src" ]
-# targets = [ "aarch64-unknown-linux-musl" ]
+targets = [ "aarch64-unknown-linux-musl" ]
